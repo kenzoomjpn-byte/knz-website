@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original audio masters (not deployed)
+/audio-masters
+
+# subscriber backups (personal data — never commit)
+/data
+
+# local Claude Code permissions
+.claude/settings.local.json

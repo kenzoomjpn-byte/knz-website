@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050705;
+  --surface: #0a0e08;
+  --line: rgba(168, 255, 62, 0.13);
+  --foreground: #dde8d2;
+  --muted: #71806a;
+  --accent: #a8ff3e;
+  --accent-dim: rgba(168, 255, 62, 0.35);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --font-sans: var(--font-space-grotesk), var(--font-jp), system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+/* ---- scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- slow rotation for geometry ornaments ---- */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-slow-rev {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 60s linear infinite;
+  transform-origin: center;
+}
+
+.spin-slower {
+  animation: spin-slow-rev 90s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
+
+/* ---- ganjalien: levitation / breathing / gaze / aura ---- */
+@keyframes ganja-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(1.2deg);
+  }
+}
+
+.ganja-float {
+  animation: ganja-float 6s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+@keyframes ganja-breathe {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(1.018) scaleX(1.006);
+  }
+}
+
+.ganja-breathe {
+  animation: ganja-breathe 3.4s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes ganja-shadow {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleX(0.78);
+    opacity: 0.45;
+  }
+}
+
+.ganja-shadow {
+  animation: ganja-shadow 6s ease-in-out infinite;
+}
+
+@keyframes ganja-aura {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.ganja-aura {
+  animation: ganja-aura 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .spin-slow,
+  .spin-slower,
+  .pulse-glow,
+  .ganja-float,
+  .ganja-breathe,
+  .ganja-shadow,
+  .ganja-aura {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KNZ — Official Website
 
-## Getting Started
+宇宙音楽実験家 KNZ のオフィシャルサイト。
+Nature × Machine ∞ Universe — sacred geometry、麻の葉文様、アシッドグリーンの世界観。
 
-First, run the development server:
+Next.js (App Router) / TypeScript / Tailwind CSS v4
+
+## 開発
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev    # http://localhost:3000
+npm run build  # 本番ビルド
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 環境変数(.env.local / ホスティング側に設定)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| 変数 | 用途 |
+|---|---|
+| `CONTACT_FORWARD_EMAIL` | 問い合わせ・FANS登録の通知メール転送先 |
+| `SHEETS_WEBHOOK_URL` | FANS登録をGoogleスプレッドシートに追記するApps Script URL(セットアップ手順: `docs/sheets-webhook.gs`) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## コンテンツの更新方法
 
-## Learn More
+| 更新したいもの | 場所 |
+|---|---|
+| LISTEN の楽曲 | 更新不要。SoundCloud に公開すると自動反映 |
+| リリース(試聴・購入ページ) | `lib/releases.ts` に1件追加。アートワークは `public/artwork/` へ。SoundCloud埋め込みIDは `https://soundcloud.com/oembed?format=json&url=<トラックURL>` で取得 |
+| グッズ | `components/Goods.tsx` の `GOODS` 配列。商品写真は `public/goods/`、リンク先はBandcampの商品ページ |
+| 動画 | `components/Videos.tsx` の `VIDEOS` 配列(YouTube ID / InstagramリールID) |
+| 文言(日英) | `lib/i18n.tsx` の辞書 |
+| プロフィール | `app/page.tsx` の PROFILE セクション |
 
-To learn more about Next.js, take a look at the following resources:
+## デプロイ(Vercel)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. GitHubにリポジトリを作成してプッシュ
+2. [vercel.com](https://vercel.com) にGitHubでログイン → Import Project → このリポジトリを選択
+3. Environment Variables に上記2つを設定
+4. Deploy — 以降は `git push` だけで自動デプロイ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## メモ
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 問い合わせ/FANS通知は [FormSubmit](https://formsubmit.co) 経由(転送先メールで有効化済み)
+- 音源マスターは `audio-masters/`(git管理外)。サイトからの試聴はすべてSoundCloud埋め込み
+- 隠し機能: トップのK/N/Zの文字をクリック → 音声認証「ケンズーム」
