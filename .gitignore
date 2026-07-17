@@ -48,3 +48,7 @@ next-env.d.ts
 
 # local Claude Code permissions
 .claude/settings.local.json
+
+# unrelated nested repos left in this folder
+/KNZ
+/web
