@@ -41,6 +41,7 @@ export default function RootLayout({
     <html
       lang="ja"
       className={`${spaceGrotesk.variable} ${zenKaku.variable} ${spaceMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>{children}</LanguageProvider>
