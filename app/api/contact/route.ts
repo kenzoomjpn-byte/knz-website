@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 /**
  * 問い合わせフォームの送信先。宛先アドレスはサーバー側の環境変数にのみ
@@ -6,6 +7,10 @@ import { NextResponse } from "next/server";
  * (https://formsubmit.co) の AJAX エンドポイント経由。
  */
 export async function POST(request: Request) {
+  if (!rateLimit(`contact:${clientIp(request)}`)) {
+    return NextResponse.json({ error: "too many requests" }, { status: 429 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();

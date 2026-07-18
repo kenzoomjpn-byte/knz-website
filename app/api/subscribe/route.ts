@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir, stat } from "fs/promises";
 import path from "path";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 /**
  * FANS メルマガ登録。届いた登録は三重に記録する:
@@ -12,6 +13,10 @@ import path from "path";
 const csvEscape = (v: string) => `"${v.replace(/"/g, '""')}"`;
 
 export async function POST(request: Request) {
+  if (!rateLimit(`subscribe:${clientIp(request)}`)) {
+    return NextResponse.json({ error: "too many requests" }, { status: 429 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();
